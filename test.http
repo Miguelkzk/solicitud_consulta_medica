@@ -1,0 +1,8 @@
+### Prueba para iniciar el proceso de validación de paciente
+POST http://localhost:8099/start
+Content-Type: application/json
+
+{
+  "dni": "12345678",
+  "nombre": "Juan"
+}

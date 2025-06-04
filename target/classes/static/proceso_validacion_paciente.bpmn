@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1yl69r7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.35.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="Process_0x09901" isExecutable="true">
+    <bpmn:exclusiveGateway id="Gateway_07yr8vq" name="Datos del paciente válidos?">
+      <bpmn:incoming>Flow_1ui970c</bpmn:incoming>
+      <bpmn:outgoing>Flow_04aqx68</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0rsyalf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="Event_1ikch9l" name="Datos inválidos">
+      <bpmn:incoming>Flow_0rsyalf</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_04aqx68" sourceRef="Gateway_07yr8vq" targetRef="Activity_042rfou">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=datos_validos =true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_04uvo5u" sourceRef="Gateway_0f4g5ae" targetRef="Event_08al3k6">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=apto_cobertura = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0jhaeq7" sourceRef="Gateway_0f4g5ae" targetRef="Event_044sa5r">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=apto_cobertura =true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0rsyalf" sourceRef="Gateway_07yr8vq" targetRef="Event_1ikch9l">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=datos_validos =false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0t234jb" sourceRef="StartEvent_1" targetRef="Activity_0efft8f" />
+    <bpmn:sequenceFlow id="Flow_0tifksr" sourceRef="Activity_042rfou" targetRef="Gateway_0f4g5ae" />
+    <bpmn:sequenceFlow id="Flow_1ui970c" sourceRef="Activity_0efft8f" targetRef="Gateway_07yr8vq" />
+    <bpmn:exclusiveGateway id="Gateway_0f4g5ae" name="Paciente apto para cobertura?">
+      <bpmn:incoming>Flow_0tifksr</bpmn:incoming>
+      <bpmn:outgoing>Flow_04uvo5u</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0jhaeq7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:startEvent id="StartEvent_1" name="Solicitud recibida">
+      <bpmn:outgoing>Flow_0t234jb</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_044sa5r" name="Validación aceptada">
+      <bpmn:incoming>Flow_0jhaeq7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_08al3k6" name="Validación rechazada">
+      <bpmn:incoming>Flow_04uvo5u</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_0efft8f" name="Validar datos paciente">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="validarDatosPaciente" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0t234jb</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ui970c</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_042rfou" name="Verificar cobertura del paciente">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="verificarCoberturaPaciente" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_04aqx68</bpmn:incoming>
+      <bpmn:outgoing>Flow_0tifksr</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0x09901">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="158" y="173" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0efft8f_di" bpmnElement="Activity_0efft8f">
+        <dc:Bounds x="300" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_07yr8vq_di" bpmnElement="Gateway_07yr8vq" isMarkerVisible="true">
+        <dc:Bounds x="505" y="115" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="487" y="76" width="86" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_042rfou_di" bpmnElement="Activity_042rfou">
+        <dc:Bounds x="640" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1puh9j2" bpmnElement="Gateway_0f4g5ae" isMarkerVisible="true">
+        <dc:Bounds x="825" y="115" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="811" y="76" width="78" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1iy14f0" bpmnElement="Event_044sa5r">
+        <dc:Bounds x="942" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="936" y="173" width="49" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0t795i1" bpmnElement="Event_08al3k6">
+        <dc:Bounds x="942" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="935" y="303" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ikch9l_di" bpmnElement="Event_1ikch9l">
+        <dc:Bounds x="602" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="582" y="293" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0t234jb_di" bpmnElement="Flow_0t234jb">
+        <di:waypoint x="218" y="140" />
+        <di:waypoint x="300" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ui970c_di" bpmnElement="Flow_1ui970c">
+        <di:waypoint x="400" y="140" />
+        <di:waypoint x="505" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04aqx68_di" bpmnElement="Flow_04aqx68">
+        <di:waypoint x="555" y="140" />
+        <di:waypoint x="640" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0rsyalf_di" bpmnElement="Flow_0rsyalf">
+        <di:waypoint x="530" y="165" />
+        <di:waypoint x="530" y="260" />
+        <di:waypoint x="602" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tifksr_di" bpmnElement="Flow_0tifksr">
+        <di:waypoint x="740" y="140" />
+        <di:waypoint x="825" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04uvo5u_di" bpmnElement="Flow_04uvo5u">
+        <di:waypoint x="850" y="165" />
+        <di:waypoint x="850" y="270" />
+        <di:waypoint x="942" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jhaeq7_di" bpmnElement="Flow_0jhaeq7">
+        <di:waypoint x="875" y="140" />
+        <di:waypoint x="942" y="140" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
