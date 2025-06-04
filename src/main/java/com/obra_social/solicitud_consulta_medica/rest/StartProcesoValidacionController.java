@@ -16,7 +16,7 @@ import io.camunda.client.CamundaClient;
 @RequestMapping("/")
 public class StartProcesoValidacionController {
   private static final Logger LOG = LoggerFactory.getLogger(StartProcesoValidacionController.class);
-   private static final String PROCESS_ID = "Process_0x09901"; // ID del proceso BPMN
+   private static final String PROCESS_ID = "proceso_validacion_paciente"; // ID del proceso BPMN
 
   @Autowired private CamundaClient zeebe;
 

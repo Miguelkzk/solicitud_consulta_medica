@@ -1,8 +1,49 @@
-### Prueba para iniciar el proceso de validación de paciente
+### caso 1, todo ok flujo completo
 POST http://localhost:8099/start
 Content-Type: application/json
 
-{
-  "dni": "12345678",
-  "nombre": "Juan"
+{ 
+ "num_socio": "123456", 
+ "especialidad": "Cardiología", 
+ "motivo": "Chequeo general" 
+}
+
+### caso 2, cliente vacio
+POST http://localhost:8099/start
+Content-Type: application/json
+
+{ 
+ "num_socio": "", 
+ "especialidad": "Cardiología", 
+ "motivo": "Chequeo general" 
+}
+
+### caso 3, socio con deuda
+POST http://localhost:8099/start
+Content-Type: application/json
+
+{ 
+ "num_socio": "999", 
+ "especialidad": "Cardiología", 
+ "motivo": "Chequeo general" 
+}
+
+### caso 4, especialidad no disponible
+POST http://localhost:8099/start
+Content-Type: application/json
+
+{ 
+ "num_socio": "123456", 
+ "especialidad": "Oncología", 
+ "motivo": "Chequeo general" 
+}
+
+### caso 5, motivo vacio
+POST http://localhost:8099/start
+Content-Type: application/json
+
+{ 
+ "num_socio": "123456", 
+ "especialidad": "Cardiología", 
+ "motivo": "" 
 }
