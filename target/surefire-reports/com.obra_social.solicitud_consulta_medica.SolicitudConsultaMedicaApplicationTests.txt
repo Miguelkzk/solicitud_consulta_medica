@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.obra_social.solicitud_consulta_medica.SolicitudConsultaMedicaApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.844 s -- in com.obra_social.solicitud_consulta_medica.SolicitudConsultaMedicaApplicationTests
