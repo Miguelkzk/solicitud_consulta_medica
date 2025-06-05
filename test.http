@@ -8,7 +8,7 @@ Content-Type: application/json
  "motivo": "Chequeo general" 
 }
 
-### caso 2, cliente vacio
+### caso 2, cliente vacio (error de negocio en ValidarDatosPacienteHandler)
 POST http://localhost:8099/start
 Content-Type: application/json
 
@@ -18,7 +18,16 @@ Content-Type: application/json
  "motivo": "Chequeo general" 
 }
 
-### caso 3, socio con deuda
+### caso 3, motivo vacio (error de negocio en ValidarDatosPacienteHandler)
+POST http://localhost:8099/start
+Content-Type: application/json
+
+{ 
+ "num_socio": "123456", 
+ "especialidad": "Cardiología", 
+ "motivo": "" 
+}
+### caso 4, socio con deuda (error de negocio en VerificarCoberturaPacienteHandler)
 POST http://localhost:8099/start
 Content-Type: application/json
 
@@ -28,7 +37,7 @@ Content-Type: application/json
  "motivo": "Chequeo general" 
 }
 
-### caso 4, especialidad no disponible
+### caso 5, especialidad no cubierta por el plan (error de negocio en VerificarCoberturaPacienteHandler)
 POST http://localhost:8099/start
 Content-Type: application/json
 
@@ -38,12 +47,23 @@ Content-Type: application/json
  "motivo": "Chequeo general" 
 }
 
-### caso 5, motivo vacio
+
+### caso 6, error técnico en RevisarAgendaHandler
 POST http://localhost:8099/start
 Content-Type: application/json
 
 { 
  "num_socio": "123456", 
  "especialidad": "Cardiología", 
- "motivo": "" 
+ "motivo": "error-tecnico" 
+}
+
+### caso 7, sin turnos disponibles (negocio en RevisarAgendaHandler)
+POST http://localhost:8099/start
+Content-Type: application/json
+
+{ 
+ "num_socio": "123456", 
+ "especialidad": "Cardiología", 
+ "motivo": "SinTurno" 
 }
